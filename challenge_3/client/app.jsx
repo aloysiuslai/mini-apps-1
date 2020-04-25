@@ -19,13 +19,20 @@ class App extends React.Component {
     this.nextPage = this.nextPage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.clearState = this.clearState.bind(this);
+    this.submitInfo = this.submitInfo.bind(this);
   };
 
-  // submitInfo() {
-  //   axios.post('/info',)
-  //     .then(()=>console.log('Submitted'))
-  //     .catch(()=>console.log(error))
-  // }
+  submitInfo() {
+    axios.post('/info', this.state)
+      .then(()=>console.log('Submitted'))
+      .catch((error)=>console.log(error))
+  }
+
+  getInfo() {
+    axios.get('/info')
+      .then((res)=> console.log(res.data))
+      .catch(()=>console.log('error'));
+  }
 
   clearState() {
     this.setState({
@@ -52,11 +59,7 @@ class App extends React.Component {
     console.log(this.state.page)
   }
 
-  getInfo() {
-    axios.get('/info')
-      .then((res)=> console.log(res.data))
-      .catch(()=>console.log('error'));
-  }
+
 
   handleChange(event) {
     // console.log(event.target);
@@ -98,7 +101,7 @@ class App extends React.Component {
 
     if (this.state.page === 4) {
       return (
-        <Confirmation clearState={this.clearState}/>
+        <Confirmation clearState={this.clearState} submitInfo={this.submitInfo}/>
       )
     }
   }
@@ -199,7 +202,7 @@ class Confirmation extends React.Component {
     return (
       <div>
         <h1>Confirmation Page</h1>
-        <button onClick={this.props.clearState}>Next</button>
+        <button onClick={this.props.clearState,this.props.submitInfo}>Return Home</button>
       </div>
     )
   }
