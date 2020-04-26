@@ -20,7 +20,13 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearState = this.clearState.bind(this);
     this.submitInfo = this.submitInfo.bind(this);
+    this.doubleSubmit = this.doubleSubmit.bind(this);
   };
+
+  doubleSubmit() {
+    this.clearState();
+    this.submitInfo();
+  }
 
   submitInfo() {
     axios.post('/info', this.state)
@@ -54,7 +60,6 @@ class App extends React.Component {
   nextPage () {
     console.log(this.state.page)
     const newPage = this.state.page + 1;
-    // console.log(newPage);
     this.setState({page: newPage})
     console.log(this.state.page)
   }
@@ -62,7 +67,6 @@ class App extends React.Component {
 
 
   handleChange(event) {
-    // console.log(event.target);
     const {name, value} = event.target;
     this.setState({[name]: value});
 
@@ -101,7 +105,7 @@ class App extends React.Component {
 
     if (this.state.page === 4) {
       return (
-        <Confirmation clearState={this.clearState} submitInfo={this.submitInfo}/>
+        <Confirmation doubleSubmit={this.doubleSubmit} submitInfo={this.submitInfo}/>
       )
     }
   }
@@ -202,7 +206,7 @@ class Confirmation extends React.Component {
     return (
       <div>
         <h1>Confirmation Page</h1>
-        <button onClick={this.props.clearState,this.props.submitInfo}>Return Home</button>
+        <button onClick={this.props.doubleSubmit}>Return Home</button>
       </div>
     )
   }
